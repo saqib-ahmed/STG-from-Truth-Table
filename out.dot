@@ -1,7 +1,8 @@
 digraph g{
 rankdir="LR";
+graph [dpi=300];
 edge[splines="curved"]
-node [shape = doublecircle]; "35_cent_S_2\n1101" "35_cent_S\n1001" "40_cent_S\n1010" "40_cent_S_2\n1101" "45_cent_S\n1011" "45_cent_S_2\n1110" "50_cent_S\n1111";
+node [shape = doublecircle]; "30_cent_S\n1000" "35_cent_S_2\n1101" "35_cent_S\n1001" "40_cent_S\n1010" "40_cent_S_2\n1101" "45_cent_S\n1011" "45_cent_S_2\n1110" "50_cent_S\n1111";
 node [shape = circle];
 "0_cent_S\n0000"->"0_cent_S\n0000"[label="000/100"];
 "0_cent_S\n0000"->"5_cent_S\n0000"[label="001/101"];

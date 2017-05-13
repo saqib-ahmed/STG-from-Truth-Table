@@ -23,7 +23,7 @@ func main() {
     log.Fatal("Unable to open output")
   }
   lineCount := 0
-  fixedStr := "digraph g{\nrankdir=\"LR\";\nedge[splines=\"curved\"]\nnode [shape = doublecircle]; \"35_cent_S_2\\n1101\" \"35_cent_S\\n1001\" \"40_cent_S\\n1010\" \"40_cent_S_2\\n1101\" \"45_cent_S\\n1011\" \"45_cent_S_2\\n1110\" \"50_cent_S\\n1111\";\nnode [shape = circle];\n"
+  fixedStr := "digraph g{\nrankdir=\"LR\";\ngraph [dpi=300];\nedge[splines=\"curved\"]\nnode [shape = doublecircle]; \"30_cent_S\\n1000\" \"35_cent_S_2\\n1101\" \"35_cent_S\\n1001\" \"40_cent_S\\n1010\" \"40_cent_S_2\\n1101\" \"45_cent_S\\n1011\" \"45_cent_S_2\\n1110\" \"50_cent_S\\n1111\";\nnode [shape = circle];\n"
   csvOut.WriteString(fixedStr)
   fmt.Printf("File is: %s", r)
   for {
