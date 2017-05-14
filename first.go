@@ -7,6 +7,7 @@ import (
   "encoding/csv"
   "log"
   "os"
+  "os/exec"
 )
 
 func main() {
@@ -50,5 +51,8 @@ func main() {
     lineCount += 1
   }
   csvOut.WriteString("}")
-  
+
+  cmd := exec.Command("dot -Tpng .\\out.dot -o .\\out.png")
+  fmt.Println(cmd)
+
 }
