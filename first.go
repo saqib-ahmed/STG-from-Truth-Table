@@ -8,10 +8,19 @@ import (
   "log"
   "os"
   "os/exec"
+  "sync"
+  "strings"
 )
 
 func main() {
   // setup reader
+  dpi :=""
+  if len(os.Args)<2 || os.Args[1]< "20"{
+    dpi = "150"
+  } else {
+    dpi = os.Args[1]
+  }
+
   csvIn, err := os.Open("truth_fsm.csv")
   if err != nil {
     log.Fatal(err)
@@ -23,10 +32,14 @@ func main() {
   if err != nil {
     log.Fatal("Unable to open output")
   }
+
   lineCount := 0
-  fixedStr := "digraph g{\nrankdir=\"LR\";\ngraph [dpi=300];\nedge[splines=\"curved\"]\nnode [shape = doublecircle]; \"30_cent_S\\n1000\" \"35_cent_S_2\\n1101\" \"35_cent_S\\n1001\" \"40_cent_S\\n1010\" \"40_cent_S_2\\n1101\" \"45_cent_S\\n1011\" \"45_cent_S_2\\n1110\" \"50_cent_S\\n1111\";\nnode [shape = circle];\n"
+  fixedStr := fmt.Sprintf("digraph g{\nrankdir=\"LR\";\ngraph [dpi=%s];\nedge" +
+    "[splines=\"curved\"]\nnode [shape = doublecircle]; \"30_cent_S\\n1000\" \""+
+    "35_cent_S_2\\n1101\" \"35_cent_S\\n1001\" \"40_cent_S\\n1010\" \"40_cent_S_2"+
+    "\\n1101\" \"45_cent_S\\n1011\" \"45_cent_S_2\\n1110\" \"50_cent_S\\n1111\";"+
+    "\nnode [shape = circle];\n", dpi)
   csvOut.WriteString(fixedStr)
-  fmt.Printf("File is: %s", r)
   for {
     // read just one record, but we could ReadAll() as well
     record, err := r.Read()
@@ -41,9 +54,7 @@ func main() {
 		lineCount +=1;
 		continue;
 	}
-    // record is an array of string so is directly printable
-    fmt.Println("Record", lineCount, "is", record, "and has", len(record), "fields")
-    // and we can iterate on top of that
+
 	//output :=fmt.Sprintf("%c%c%c%c",record[5][1],record[5][3],record[5][2],record[5][4])
     str := fmt.Sprintf("\"%s\"->\"%s\"[label=%s];\n",record[1],record[4],record[2])
     csvOut.WriteString(str)
@@ -52,7 +63,36 @@ func main() {
   }
   csvOut.WriteString("}")
 
-  cmd := exec.Command("dot -Tpng .\\out.dot -o .\\out.png")
-  fmt.Println(cmd)
+  // fmt.Println("BAR:", os.Getenv("PATH"))
+  // cmd := exec.Command("dot -Tpng out.dot -o out.png")
+  // var out bytes.Buffer
+  // cmd.Stdout = &out
+  // err1 := cmd.Run()
+  // if err1 != nil {
+  //   log.Fatal(err1)
+  // }
 
+  wg := new(sync.WaitGroup)
+  dot := fmt.Sprintf("dot -Tpng out.dot -o out_%sdpi.png", dpi)
+  wg.Add(1)
+
+  x := []string{dot}
+  go exe_cmd(x[0], wg)
+  wg.Wait()
+
+}
+
+func exe_cmd(cmd string, wg *sync.WaitGroup) {
+  fmt.Println("Executing: ",cmd)
+  // splitting head => g++ parts => rest of the command
+  parts := strings.Fields(cmd)
+  head := parts[0]
+  parts = parts[1:len(parts)]
+
+  out, err := exec.Command(head,parts...).Output()
+  if err != nil {
+    fmt.Printf("%s", err)
+  }
+  fmt.Printf("%s", out)
+  wg.Done() // Need to signal to waitgroup that this goroutine is done
 }
