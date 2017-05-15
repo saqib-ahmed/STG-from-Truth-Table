@@ -28,7 +28,7 @@ go run script.go truth_fsm.csv 300
 ```
 #### Sample Output
 Sample outputs with various dpi resolutions are provided in [Sample Pictures](https://github.com/saqibahmed515/State-Transition-Graph-from-CSV/tree/master/sample%20pictures) folder.
-![Sample image](https://github.com/saqibahmed515/State-Transition-Graph-from-CSV/blob/master/sample%20pictures/out_150dpi.png)
+![Sample image](https://github.com/saqibahmed515/State-Transition-Graph-from-CSV/blob/master/sample%20pictures/out_300dpi.png)
 
 
 ## Sample project
