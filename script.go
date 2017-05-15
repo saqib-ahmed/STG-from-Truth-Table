@@ -15,13 +15,21 @@ import (
 func main() {
   // setup reader
   dpi :=""
-  if len(os.Args)<2 || os.Args[1]< "20"{
+  file := ""
+  if len(os.Args)<2 {
+    log.Fatal("Please provide the input file.\n" +
+              "go run script.go <file.csv> <dpi resolution>")
     dpi = "150"
-  } else {
-    dpi = os.Args[1]
+    file = "truth_fsm.csv"
+  } else if len(os.Args)<3 || os.Args[2]< "20" || os.Args[2]> "1000"{
+    dpi = "150"
+    file = os.Args[1]
+    } else {
+    dpi = os.Args[2]
+    file = os.Args[1]
   }
-
-  csvIn, err := os.Open("truth_fsm.csv")
+  fmt.Println(file)
+  csvIn, err := os.Open(file)
   if err != nil {
     log.Fatal(err)
   }

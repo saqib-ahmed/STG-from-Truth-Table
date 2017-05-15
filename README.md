@@ -16,7 +16,20 @@ The csv should be formatted with "empty cell or number","Present state", "Input 
 For example, [truth_fsm.csv](https://github.com/saqibahmed515/State-Transition-Graph-from-CSV/blob/master/truth_fsm.csv) is a valid csv file.  The heading names are irrelevant and ignored by default. Just give the values in this order.
 
 ### Generating STG:
-> under construction
+General command format to execute the script is:
+```bash
+go run script.go </path/to/csvFile> <dpi resolution>
+```
+simply execute this command in the project directory with a valid csv file.
+#### Example
+In this project, you can execute:
+```bash
+go run script.go truth_fsm.csv 300
+```
+#### Sample Output
+Sample outputs with various dpi resolutions are provided in [Sample Pictures](https://github.com/saqibahmed515/State-Transition-Graph-from-CSV/tree/master/sample%20pictures) folder.
+![Sample image](https://github.com/saqibahmed515/State-Transition-Graph-from-CSV/blob/master/sample%20pictures/out_150dpi.png)
+
 
 ## Sample project
 A sample project is also included which has complete flow of a solution.
