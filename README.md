@@ -1,4 +1,4 @@
-# State-Transition-Graph-from-CSV
+# State Transition Graph from Truth Table
 This project is aimed to design a state transition graph of a moore finite state machine from a csv truth table containing next state values for each input.
 
 ## What does it do?
